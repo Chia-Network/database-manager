@@ -51,9 +51,12 @@ func (c *Config) expandEnv() error {
 	// @TODO deal with string vs uint
 	//c.Connection.Port = checkSingleEnvValue(c.Connection.Port, &errs)
 
-	// @TODO If empty, this should probably default to localhost (safer than %)
 	for i, restriction := range c.Defaults.NetworkRestrictions {
 		c.Defaults.NetworkRestrictions[i] = checkSingleEnvValue(restriction, &errs)
+	}
+	// If empty, default to localhost (safer than %)
+	if len(c.Defaults.NetworkRestrictions) == 0 {
+		c.Defaults.NetworkRestrictions = append(c.Defaults.NetworkRestrictions, "localhost")
 	}
 
 	for i, user := range c.Users {
