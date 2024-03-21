@@ -33,7 +33,7 @@ build: $(BIN) ; $(info $(M) building executable…) @ ## Build program binary
 $(BIN):
 	@mkdir -p $@
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE)…)
-	$Q env GOBIN=$(BIN) $(GO) install $(PACKAGE) \
+	$Q env GOBIN=$(BIN) $(GO) install -buildvcs=false $(PACKAGE) \
 		|| ret=$$?; \
 	   exit $$ret
 
