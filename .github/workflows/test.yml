@@ -9,9 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: golang:1
-    env:
-      GOFLAGS: "-buildvcs=false"
     steps:
+      - name: Add safe git directory
+        uses: Chia-Network/actions/git-mark-workspace-safe@main
+
       - uses: actions/checkout@v4
 
       - name: Test
