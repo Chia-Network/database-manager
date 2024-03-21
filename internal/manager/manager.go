@@ -34,10 +34,13 @@ func (m *Manager) Apply() error {
 	}
 
 	for _, user := range m.cfg.Users {
-		err = m.manager.CreateUser(user.Username, user.Password, m.cfg.Defaults.NetworkRestriction)
-		if err != nil {
-			return err
+		for _, restriction := range m.cfg.Defaults.NetworkRestrictions {
+			err = m.manager.CreateUser(user.Username, user.Password, restriction)
+			if err != nil {
+				return err
+			}
 		}
+
 	}
 
 	for _, database := range m.cfg.Databases {
@@ -46,19 +49,24 @@ func (m *Manager) Apply() error {
 			if err != nil {
 				return err
 			}
-			err = m.manager.AssignWriteUserToDatabase(database.Name, userRecord.Username, userRecord.Password, m.cfg.Defaults.NetworkRestriction)
-			if err != nil {
-				return err
+			for _, restriction := range m.cfg.Defaults.NetworkRestrictions {
+				err = m.manager.AssignWriteUserToDatabase(database.Name, userRecord.Username, userRecord.Password, restriction)
+				if err != nil {
+					return err
+				}
 			}
+
 		}
 		for _, user := range database.ReadonlyUsers {
 			userRecord, err := m.cfg.GetUserByUsername(user)
 			if err != nil {
 				return err
 			}
-			err = m.manager.AssignReadUserToDatabase(database.Name, userRecord.Username, userRecord.Password, m.cfg.Defaults.NetworkRestriction)
-			if err != nil {
-				return err
+			for _, restriction := range m.cfg.Defaults.NetworkRestrictions {
+				err = m.manager.AssignReadUserToDatabase(database.Name, userRecord.Username, userRecord.Password, restriction)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
