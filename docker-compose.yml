@@ -1,6 +1,15 @@
 version: '3'
 services:
-  mysql:
+  mysql5:
+    image: 'mysql/mysql-server:5.7'
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: 'default'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  mysql8:
     image: 'mysql/mysql-server:8.0'
     ports:
       - '3306:3306'

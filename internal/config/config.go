@@ -16,17 +16,16 @@ type Config struct {
 
 // Connection is the user/connection details that has permissions to create databases and users
 // It doesn't have to actually be the root user, but it must have appropriate permissions
-// @TODO add defaults for at least port
 type Connection struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 	Host     string `yaml:"host"`
-	Port     uint16 `yaml:"port"`
+	Port     string `yaml:"port"`
 }
 
 // Defaults for all users and/or databases can be defined here
 type Defaults struct {
-	NetworkRestriction string `yaml:"network_restriction"`
+	NetworkRestrictions []string `yaml:"network_restrictions"`
 }
 
 // User is a single database user

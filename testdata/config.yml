@@ -1,0 +1,39 @@
+connection:
+  username: root
+  password: password
+  host: localhost
+  port: 3306
+
+defaults:
+  network_restrictions:
+    - "10.0.0.0/255.255.0.0"
+    - "localhost"
+
+users:
+  # Example backup user
+  - username: backups
+    password: backup-pass
+
+  # Example additional read-only user
+  - username: additional-read
+    password: additional-readpw
+
+  - username: blocks
+    password: blockspw
+
+  - username: seconddb
+    password: seconddbpw
+
+databases:
+  - name: blocks
+    users:
+      - blocks
+    readonly_users:
+      - backups
+      - additional-read
+
+  - name: seconddb
+    users:
+      - seconddb
+    readonly_users:
+      - backups
