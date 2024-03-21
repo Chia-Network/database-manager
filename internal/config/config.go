@@ -21,7 +21,7 @@ type Connection struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 	Host     string `yaml:"host"`
-	Port     uint16 `yaml:"port"`
+	Port     string `yaml:"port"`
 }
 
 // Defaults for all users and/or databases can be defined here

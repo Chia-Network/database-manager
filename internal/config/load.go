@@ -48,8 +48,13 @@ func (c *Config) expandEnv() error {
 	c.Connection.Username = checkSingleEnvValue(c.Connection.Username, &errs)
 	c.Connection.Password = checkSingleEnvValue(c.Connection.Password, &errs)
 	c.Connection.Host = checkSingleEnvValue(c.Connection.Host, &errs)
-	// @TODO deal with string vs uint
-	//c.Connection.Port = checkSingleEnvValue(c.Connection.Port, &errs)
+	c.Connection.Port = checkSingleEnvValue(c.Connection.Port, &errs)
+	if c.Connection.Host == "" {
+		c.Connection.Host = "localhost"
+	}
+	if c.Connection.Port == "" {
+		c.Connection.Port = "3306"
+	}
 
 	for i, restriction := range c.Defaults.NetworkRestrictions {
 		c.Defaults.NetworkRestrictions[i] = checkSingleEnvValue(restriction, &errs)

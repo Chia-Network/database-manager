@@ -16,12 +16,12 @@ type Manager struct {
 }
 
 // NewMySQLManager returns a new instance of the mysql manager
-func NewMySQLManager(rootUser, rootPassword, host string, port uint16) (*Manager, error) {
+func NewMySQLManager(rootUser, rootPassword, host, port string) (*Manager, error) {
 	cfg := mysql.Config{
 		User:                 rootUser,
 		Passwd:               rootPassword,
 		Net:                  "tcp",
-		Addr:                 fmt.Sprintf("%s:%d", host, port),
+		Addr:                 fmt.Sprintf("%s:%s", host, port),
 		AllowNativePasswords: true,
 	}
 	client, err := sql.Open("mysql", cfg.FormatDSN())
