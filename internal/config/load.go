@@ -31,6 +31,11 @@ func LoadConfig(configPath string) (*Config, error) {
 		return nil, err
 	}
 
+	config.userLookup = map[string]*User{}
+	for _, user := range config.Users {
+		config.userLookup[user.Username] = &user
+	}
+
 	return config, nil
 }
 

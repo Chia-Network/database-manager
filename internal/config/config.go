@@ -1,11 +1,17 @@
 package config
 
+import (
+	"fmt"
+)
+
 // Config is the parent config object
 type Config struct {
 	Connection Connection `yaml:"connection"`
 	Defaults   Defaults   `yaml:"defaults"`
 	Users      []User     `yaml:"users"`
 	Databases  []Database `yaml:"databases"`
+
+	userLookup map[string]*User
 }
 
 // Connection is the user/connection details that has permissions to create databases and users
@@ -36,4 +42,14 @@ type Database struct {
 	Name          string   `yaml:"name"`
 	Users         []string `yaml:"users"`
 	ReadonlyUsers []string `yaml:"readonly_users"`
+}
+
+// GetUserByUsername returns a user by the username
+func (c *Config) GetUserByUsername(username string) (*User, error) {
+	user, exists := c.userLookup[username]
+	if !exists {
+		return nil, fmt.Errorf("can't find user in config")
+	}
+
+	return user, nil
 }

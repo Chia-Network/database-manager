@@ -59,7 +59,7 @@ func (m *Manager) CreateUser(username, password, networkRestriction string) erro
 	if err != nil {
 		return err
 	}
-	result, err := m.client.Query(fmt.Sprintf("CREATE USER IF NOT EXISTS '%s'@'%s';", username, networkRestriction))
+	result, err := m.client.Query(fmt.Sprintf("CREATE USER IF NOT EXISTS '%s'@'%s' IDENTIFIED BY '%s';", username, networkRestriction, password))
 	if err != nil {
 		return err
 	}
@@ -85,11 +85,10 @@ func (m *Manager) AssignWriteUserToDatabase(databaseName, username, password, ne
 		return err
 	}
 	result, err := m.client.Query(fmt.Sprintf(
-		"GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%s' IDENTIFIED BY '%s';",
+		"GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%s';",
 		databaseName,
 		username,
 		networkRestriction,
-		password,
 	))
 	if err != nil {
 		return err
@@ -116,11 +115,10 @@ func (m *Manager) AssignReadUserToDatabase(databaseName, username, password, net
 		return err
 	}
 	result, err := m.client.Query(fmt.Sprintf(
-		"GRANT SELECT, SHOW VIEW ON `%s`.* TO '%s'@'%s' IDENTIFIED BY '%s';",
+		"GRANT SELECT, SHOW VIEW ON `%s`.* TO '%s'@'%s'",
 		databaseName,
 		username,
 		networkRestriction,
-		password,
 	))
 	if err != nil {
 		return err
