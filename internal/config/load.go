@@ -40,8 +40,8 @@ func LoadConfig(configPath string) (*Config, error) {
 func (c *Config) expandEnv() error {
 	var errs []error
 
-	c.Root.Username = checkSingleEnvValue(c.Root.Username, &errs)
-	c.Root.Password = checkSingleEnvValue(c.Root.Password, &errs)
+	c.Connection.Username = checkSingleEnvValue(c.Connection.Username, &errs)
+	c.Connection.Password = checkSingleEnvValue(c.Connection.Password, &errs)
 	c.Defaults.NetworkRestriction = checkSingleEnvValue(c.Defaults.NetworkRestriction, &errs)
 
 	for i, user := range c.Users {

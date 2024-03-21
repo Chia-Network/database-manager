@@ -29,7 +29,7 @@ var applyCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("Error creating MySQL Manager: %s\n", err.Error())
 		}
-		mgr, err := manager.NewManager(mysqlM)
+		mgr, err := manager.NewManager(mysqlM, cfg)
 		if err != nil {
 			log.Fatalf("Error creating manager: %s\n", err.Error())
 		}
