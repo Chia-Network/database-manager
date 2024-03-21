@@ -10,6 +10,7 @@ type Config struct {
 
 // Connection is the user/connection details that has permissions to create databases and users
 // It doesn't have to actually be the root user, but it must have appropriate permissions
+// @TODO add defaults for at least port
 type Connection struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
