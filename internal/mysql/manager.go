@@ -59,6 +59,10 @@ func (m *Manager) CreateUser(username, password, networkRestriction string) erro
 	if err != nil {
 		return err
 	}
+	password, err = sanitizePassword(password)
+	if err != nil {
+		return err
+	}
 	result, err := m.client.Query(fmt.Sprintf("CREATE USER IF NOT EXISTS '%s'@'%s' IDENTIFIED BY '%s';", username, networkRestriction, password))
 	if err != nil {
 		return err
@@ -77,10 +81,6 @@ func (m *Manager) AssignWriteUserToDatabase(databaseName, username, password, ne
 		return err
 	}
 	username, err = sanitizeUsername(username)
-	if err != nil {
-		return err
-	}
-	password, err = sanitizePassword(password)
 	if err != nil {
 		return err
 	}
@@ -107,10 +107,6 @@ func (m *Manager) AssignReadUserToDatabase(databaseName, username, password, net
 		return err
 	}
 	username, err = sanitizeUsername(username)
-	if err != nil {
-		return err
-	}
-	password, err = sanitizePassword(password)
 	if err != nil {
 		return err
 	}
