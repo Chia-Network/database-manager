@@ -16,7 +16,7 @@ type Manager struct {
 }
 
 // NewMySQLManager returns a new instance of the mysql manager
-func (m *Manager) NewMySQLManager(rootUser, rootPassword, host string, port uint16) (*Manager, error) {
+func NewMySQLManager(rootUser, rootPassword, host string, port uint16) (*Manager, error) {
 	cfg := mysql.Config{
 		User:                 rootUser,
 		Passwd:               rootPassword,

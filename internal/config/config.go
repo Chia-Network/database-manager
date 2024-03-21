@@ -2,17 +2,19 @@ package config
 
 // Config is the parent config object
 type Config struct {
-	Root      RootUser   `yaml:"root"`
-	Defaults  Defaults   `yaml:"defaults"`
-	Users     []User     `yaml:"users"`
-	Databases []Database `yaml:"databases"`
+	Connection Connection `yaml:"connection"`
+	Defaults   Defaults   `yaml:"defaults"`
+	Users      []User     `yaml:"users"`
+	Databases  []Database `yaml:"databases"`
 }
 
-// RootUser is the user that has permissions to create databases and users
-// It doesn't have to actually be root, but it must have appropriate permissions
-type RootUser struct {
+// Connection is the user/connection details that has permissions to create databases and users
+// It doesn't have to actually be the root user, but it must have appropriate permissions
+type Connection struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
+	Host     string `yaml:"host"`
+	Port     uint16 `yaml:"port"`
 }
 
 // Defaults for all users and/or databases can be defined here
