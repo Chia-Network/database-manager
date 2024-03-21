@@ -26,7 +26,7 @@ type Connection struct {
 
 // Defaults for all users and/or databases can be defined here
 type Defaults struct {
-	NetworkRestrictions []string `yaml:"network_restriction"`
+	NetworkRestrictions []string `yaml:"network_restrictions"`
 }
 
 // User is a single database user
