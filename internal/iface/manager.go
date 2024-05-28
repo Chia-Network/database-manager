@@ -7,7 +7,7 @@ type Manager interface {
 
 	// CreateUser ensures the user exists in the database server
 	// Some servers may not utilize the password and/or networkRestriction in this step, but it's here for most flexibility
-	CreateUser(username, password, networkRestriction string) error
+	CreateUser(username, password, networkRestriction string, globalPerms []string) error
 
 	// AssignWriteUserToDatabase adds a write user to a database
 	//

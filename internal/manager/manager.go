@@ -35,7 +35,7 @@ func (m *Manager) Apply() error {
 
 	for _, user := range m.cfg.Users {
 		for _, restriction := range m.cfg.Defaults.NetworkRestrictions {
-			err = m.manager.CreateUser(user.Username, user.Password, restriction)
+			err = m.manager.CreateUser(user.Username, user.Password, restriction, user.GlobalPermissions)
 			if err != nil {
 				return err
 			}

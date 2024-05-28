@@ -31,8 +31,9 @@ type Defaults struct {
 // User is a single database user
 // Permissions are defined per DB
 type User struct {
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
+	Username          string   `yaml:"username"`
+	Password          string   `yaml:"password"`
+	GlobalPermissions []string `yaml:"global-permissions"`
 }
 
 // Database is a database + its user permissions

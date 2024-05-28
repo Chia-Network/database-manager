@@ -3,6 +3,7 @@ package mysql
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
@@ -54,7 +55,7 @@ func (m *Manager) CreateDatabase(databaseName string) error {
 }
 
 // CreateUser ensures the user exists in the database server
-func (m *Manager) CreateUser(username, password, networkRestriction string) error {
+func (m *Manager) CreateUser(username, password, networkRestriction string, globalPerms []string) error {
 	username, err := sanitizeUsername(username)
 	if err != nil {
 		return err
@@ -67,7 +68,14 @@ func (m *Manager) CreateUser(username, password, networkRestriction string) erro
 	if err != nil {
 		return err
 	}
-	utils.LogErrorAndContinue(result.Close(), "error closing result in CreateUser")
+	utils.LogErrorAndContinue(result.Close(), "error closing result for create user in CreateUser")
+	if len(globalPerms) > 0 {
+		result, err := m.client.Query(fmt.Sprintf("GRANT %s on *.* to '%s'@'%s';", strings.Join(globalPerms, ","), username, networkRestriction))
+		if err != nil {
+			return err
+		}
+		utils.LogErrorAndContinue(result.Close(), "error closing result for global perms in CreateUser")
+	}
 	return nil
 }
 
