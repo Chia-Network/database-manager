@@ -129,3 +129,11 @@ jobs:
           gh release upload \
             $RELEASE_TAG \
             artifacts/installer-database-manager*/*.deb
+
+      - uses: Chia-Network/actions/github/glue@main
+        if: env.FULL_RELEASE == 'true'
+        with:
+          json_data: '{"release_version":"${{ env.RELEASE_TAG }}"}'
+          glue_url: ${{ secrets.GLUE_API_URL }}
+          glue_project: "database-manager"
+          glue_path: "trigger"
